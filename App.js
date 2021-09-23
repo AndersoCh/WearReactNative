@@ -42,13 +42,14 @@ export default function App() {
         justifyContent: 'space-around',
       }}>
       <Text>Your expo push token: {expoPushToken}</Text>
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+     {/*  <View style={{ alignItems: 'center', justifyContent: 'center' }}>
         <Text>Title: {notification && notification.request.content.title} </Text>
         <Text>Body: {notification && notification.request.content.body}</Text>
         <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
-      </View>
+      </View> */}
+      <Text>Mi primera notificación para wear os</Text>
       <Button
-        title="Press to schedule a notification"
+        title="Presiona para recibir una nueva notificación"
         onPress={async () => {
           await schedulePushNotification();
         }}
@@ -60,9 +61,9 @@ export default function App() {
 async function schedulePushNotification() {
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: "You've got mail! 📬",
-      body: 'Here is the notification body',
-      data: { data: 'goes here' },
+      title: "Tienes una notificación de protección! 📬",
+      body: 'Esta es una notificación enviada a mi wear os',
+      data: { data: 'Semanas cotizadas' },
     },
     trigger: { seconds: 2 },
   });
@@ -71,8 +72,11 @@ async function schedulePushNotification() {
 async function registerForPushNotificationsAsync() {
   let token;
   if (Constants.isDevice) {
+    //Aca estamos recibiendo un estado del paquete notificaciones
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
+
+    //en este condicional recibimos una respuesta por parte del usuario de permisos para recibir notificaciones 
     if (existingStatus !== 'granted') {
       const { status } = await Notifications.requestPermissionsAsync();
       finalStatus = status;
@@ -81,6 +85,7 @@ async function registerForPushNotificationsAsync() {
       alert('Failed to get push token for push notification!');
       return;
     }
+    //Aca estoy obteniendo el token que me servira para registrar en la base de datos
     token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log(token);
   } else {
