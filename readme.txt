@@ -7,5 +7,5 @@ npm i -S expo-permissions
 expo install expo-location
 
 
-pruebamidesarrollo
+pruebamidesarrollo@gmail.com
 JavaScript
